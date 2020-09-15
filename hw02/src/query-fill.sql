@@ -27,17 +27,17 @@ insert into Courses (course_id, course_name, semester, is_elective) values
 	(8, 'Математическая логика', 4, false),
 	(9, 'Веб-программирование', 3, false);
 	
-insert into TeacherCourses (course_id, teacher_id) values
-	(1, 2),
-	(2, 2),
-	(3, 1),
-	(4, 1),
-	(5, 1),
-	(5, 4),
-	(6, 1),
-	(7, 3),
-	(8, 3),
-	(9, 4);
+insert into TeacherCourses (course_id, teacher_id, teacher_position) values
+	(1, 2, 3),
+	(2, 2, 3),
+	(3, 1, 3),
+	(4, 1, 3),
+	(5, 1, 3),
+	(5, 4, 2),
+	(6, 1, 3),
+	(7, 3, 3),
+	(8, 3, 3),
+	(9, 4, 3);
 	
 insert into GroupCourses (course_id, group_id) values
 	(6, 1),
@@ -50,13 +50,3 @@ insert into Marks (student_id, course_id, points) values
 	(2, 6, 100.00),
 	(3, 6, 100.00),
 	(4, 6, 100.00);
-	
-update Courses set main_teacher_id = 2 where course_id = 1;
-update Courses set main_teacher_id = 2 where course_id = 2;
-update Courses set main_teacher_id = 1 where course_id = 3;
-update Courses set main_teacher_id = 1 where course_id = 4;
-update Courses set main_teacher_id = 1 where course_id = 5;
-update Courses set main_teacher_id = 1 where course_id = 6;
-update Courses set main_teacher_id = 3 where course_id = 7;
-update Courses set main_teacher_id = 3 where course_id = 8;
-update Courses set main_teacher_id = 4 where course_id = 9;
