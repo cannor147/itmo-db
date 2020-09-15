@@ -41,6 +41,7 @@ create table Marks (
 );
 
 alter table Marks
+	add constraint ch_marks_points check (points >= 0 AND points <= 100),
 	add foreign key (student_id) references Students (student_id),
 	add foreign key (course_id) references Courses (course_id);
 alter table Students
