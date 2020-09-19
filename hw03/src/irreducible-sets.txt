@@ -1,0 +1,37 @@
+1. Расщепление правых частей
+На этапе расщепления нас будет интересовать лишь зависимость {StudentId -> StudentName, GroupId}, поскольку это единственная зависимость, содержащая в правой части более одного атрибута.
+Результат: 
+
+StudentId -> StudentName
+StudentId -> GroupId
+GroupId -> GroupName
+CourseId -> CourseName
+LecturerId -> LecturerName
+CourseId, GroupId -> LecturerId
+CourseId, StudentId -> Mark
+
+2. Удаление атрибута A ∪ {x} -> B
+Рассмотрим {CourseId, GroupId -> LecturerId}. Поскольку это единственная зависимость, содержащая в правой части LecturerId, то ни один атрибут удалить из левой части нельзя.
+Рассмотрим {CourseId, StudentId -> Mark}. Поскольку это единственная зависимость, содержащая в правой части Mark, то ни один атрибут удалить из левой части нельзя.
+Все остальные зависимости содержат только один атрибут в левой части.
+Результат:
+
+StudentId -> StudentName
+StudentId -> GroupId
+GroupId -> GroupName
+CourseId -> CourseName
+LecturerId -> LecturerName
+CourseId, GroupId -> LecturerId
+CourseId, StudentId -> Mark
+
+3. Удаление правила A -> B
+В нашем случае достаточно заметить, что все выражения в правых частях зависимостей встречаются единожды. Следовательно, ни одна зависимость не может быть удалена по этому правилу.
+Результат:
+
+StudentId -> StudentName
+StudentId -> GroupId
+GroupId -> GroupName
+CourseId -> CourseName
+LecturerId -> LecturerName
+CourseId, GroupId -> LecturerId
+CourseId, StudentId -> Mark
