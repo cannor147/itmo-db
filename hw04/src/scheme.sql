@@ -37,4 +37,5 @@ alter table Students
 	add foreign key (groupId) references Groups (groupId);
 alter table Teaching
 	add foreign key (groupId) references Groups (groupId),
-	add foreign key (courseId) references Courses (courseId);
+	add foreign key (courseId) references Courses (courseId),
+	add foreign key (lecturerId) references Lecturers (lecturerId);
