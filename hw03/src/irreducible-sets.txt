@@ -9,6 +9,7 @@ CourseId -> CourseName
 LecturerId -> LecturerName
 CourseId, GroupId -> LecturerId
 CourseId, StudentId -> Mark
+GroupName -> GroupId
 
 2. Удаление атрибута A ∪ {x} -> B
 Рассмотрим {CourseId, GroupId -> LecturerId}. Поскольку это единственная зависимость, содержащая в правой части LecturerId, то ни один атрибут удалить из левой части нельзя.
@@ -23,9 +24,10 @@ CourseId -> CourseName
 LecturerId -> LecturerName
 CourseId, GroupId -> LecturerId
 CourseId, StudentId -> Mark
+GroupName -> GroupId
 
 3. Удаление правила A -> B
-В нашем случае достаточно заметить, что все выражения в правых частях зависимостей встречаются единожды. Следовательно, ни одна зависимость не может быть удалена по этому правилу.
+В нашем случае достаточно заметить, что все выражения в правых частях зависимостей встречаются единожды, однако у нас присутствует циклическая зависимость {GroupId -> GroupName, GroupName -> GroupId}. Поскольку GroupName больше не присутствует ни в какой другой функциональной зависимости, достаточно удалить GroupName -> GroupId.
 Результат:
 
 StudentId -> StudentName

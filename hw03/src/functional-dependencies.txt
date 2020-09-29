@@ -4,3 +4,4 @@ CourseId -> CourseName
 LecturerId -> LecturerName
 CourseId, GroupId -> LecturerId
 CourseId, StudentId -> Mark
+GroupName -> GroupId
