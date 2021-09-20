@@ -22,10 +22,11 @@ create table Courses (
 	semester int not null,
 	is_elective boolean not null
 );
-create table GroupCourses (
-	group_id int not null,
+create table CourseMembers (
+	course_member_id int primary key,
+	student_id int not null,
 	course_id int not null,
-	primary key (group_id, course_id)
+	passed boolean not null
 );
 create table TeacherCourses (
 	teacher_id int not null,
@@ -34,20 +35,18 @@ create table TeacherCourses (
 	primary key (teacher_id, course_id)
 );
 create table Marks (
-	student_id int not null,
-	course_id int not null,
-	points decimal(5, 2) not null,
-	primary key (student_id, course_id)
+	mark_id int primary key,
+	course_member_id int not null,
+	points decimal(5, 2) not null
 );
 
 alter table Marks
 	add constraint ch_marks_points check (points >= 0 AND points <= 100),
-	add foreign key (student_id) references Students (student_id),
-	add foreign key (course_id) references Courses (course_id);
+	add foreign key (course_member_id) references CourseMembers (course_member_id);
 alter table Students
 	add foreign key (group_id) references Groups (group_id);
-alter table GroupCourses
-	add foreign key (group_id) references Groups (group_id),
+alter table CourseMembers
+	add foreign key (student_id) references Students (student_id),
 	add foreign key (course_id) references Courses (course_id);
 alter table TeacherCourses
 	add foreign key (course_id) references Courses (course_id),
