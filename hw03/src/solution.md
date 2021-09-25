@@ -100,7 +100,18 @@ GroupName -> GroupId
 
 ### Удаление правила A -> B
 
-В нашем случае достаточно заметить, что все выражения в правых частях зависимостей встречаются единожды, однако у нас присутствует циклическая зависимость `{GroupId -> GroupName, GroupName -> GroupId}`. Поскольку `GroupName` больше не присутствует ни в какой другой функциональной зависимости, достаточно удалить `GroupName -> GroupId`. Результат:
+Сразу заметим, что все выражения в правых частях зависимостей встречаются единожды. А значит, ни из каких других правил не могут быть выведены. Покажем для каждого правила:
+
+1. `{StudentId -> StudentName}`добавим как первую зависимость.
+2. `{StudentId -> GroupId}` добавим, поскольку из `StudentId` можно вывести только `StudentName`.
+3. `{GroupId -> GroupName}` добавим, так как из `GroupId` больше никакого атрибута не вывести.
+4. `{CourseId -> CourseName}` аналогично добавим, поскольку `CourseId` впервые встречается в левой части.
+5. `{LecturerId -> LecturerName}` так же добавляется из-за отсутствия `LecturerId` в левых частях предыдущих правил.
+6.  `CourseId, GroupId -> LecturerId` добавим, так как из `CourseId` и `GroupId` можно вывести только `CourseName` и `GroupName`.
+7. `CourseId, StudentId -> Mark` добавим, так как из `CourseId` и `StudentId` можно вывести лишь `CourseName`, `StudentName`, `GroupId`, а так же `GroupName` (выводится из `GroupId`) .
+8. Наконец, `GroupName -> GroupId` добавим, поскольку `GroupName` впервые встречается в левой части.
+
+Результат:
 
 ```
 StudentId -> StudentName
@@ -110,5 +121,6 @@ CourseId -> CourseName
 LecturerId -> LecturerName
 CourseId, GroupId -> LecturerId
 CourseId, StudentId -> Mark
+GroupName -> GroupId
 ```
 
