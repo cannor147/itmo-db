@@ -55,7 +55,7 @@ CourseId, StudentId => Mark
 
 Теоретически мы могли бы декомпозировать данное отношение всего лишь на три новых с ключами `StudentId`, `CourseId` и `{StudentId, CourseId}`. Однако на практике часто полезно выделять менее отношения с меньшей глубиной зависимости. Поэтому мы выделим ещё одно отношение с ключом `{CourseId, GroupId}`.
 
-Итоговые нормализация принимает вид:
+Итоговая нормализация принимает вид:
 
 ```
 (StudentId, StudentName, GroupId, GroupName, CourseId, CourseName, LecturerId, LecturerName, Mark) => (StudentId, StudentName, GroupId, GroupName) ; (CourseId, CourseName) ; (CourseId, StudentId, Mark) ; (CourseId, GroupId, LecturerId, LecturerName)
