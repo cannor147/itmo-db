@@ -1,0 +1,10 @@
+MarkedStudents(StudentId, CourseId) :-
+    Marks(StudentId, CourseId, _).
+CourseStudents(StudentId, CourseId) :-
+    Students(StudentId, _, GroupId),
+    Plan(GroupId, CourseId, _).
+Debtors(StudentName, CourseName) :-
+    Students(StudentId, StudentName, _),
+    Courses(CourseId, CourseName),
+    CourseStudents(StudentId, CourseId),
+    not MarkedStudents(StudentId, CourseId).
