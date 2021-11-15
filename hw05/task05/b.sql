@@ -4,7 +4,7 @@ from (
          from Students
                   natural join Plan
                   natural join Courses
-             except
+         except
          select StudentId, CourseId
          from Plan
                   natural join Courses
