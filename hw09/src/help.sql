@@ -36,7 +36,7 @@ create or replace function HasFakePassenger
     ) returns boolean as
 $$
 begin
-    return exists(select Passengers.UserId
+    return exists(select Passengers.SeatNo
                   from Passengers
                   where Passengers.FlightId = _FlightId
                     and Passengers.SeatNo = _SeatNo

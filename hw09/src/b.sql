@@ -16,7 +16,7 @@ begin
     if not HasAvailableSeat(Reserve.FlightId, Reserve.SeatNo, CurrentTime) then
         return false;
     end if;
-    if exists(select Passengers.UserId
+    if exists(select Passengers.SeatNo
               from Passengers
               where Passengers.FlightId = Reserve.FlightId
                 and Passengers.SeatNo = Reserve.SeatNo
