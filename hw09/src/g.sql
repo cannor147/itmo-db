@@ -1,5 +1,5 @@
 -- | Calculated statistics for user about the flight.
-create or replace function FlightsStat
+create or replace function FlightStat
     ( in UserId   integer
     , in Pass     varchar(50)
     , in FlightId integer
@@ -57,4 +57,4 @@ end;
 $$ language plpgsql;
 
 select *
-from FlightsStat(3, 'kgeorgiy', 1);
+from FlightStat(3, 'kgeorgiy', 1);
