@@ -1,8 +1,8 @@
 -- | Calculated statistics for user about the flight.
 create or replace function FlightsStat
-    ( in _UserId   integer
-    , in _Pass     varchar(50)
-    , in _FlightId integer
+    ( in UserId   integer
+    , in Pass     varchar(50)
+    , in FlightId integer
     ) returns table
     ( CanReserve    boolean -- If the user can reserve at least one seat.
     , CanBuy        boolean -- If the user can buy at least one seat.
@@ -22,29 +22,29 @@ declare
     FreeSeatsCount     integer;
 begin
     CurrentTime = now();
-    HasUser = HasUser(_UserId, _Pass);
+    HasUser = HasUser(FlightsStat.UserId, FlightsStat.Pass);
     HasAvailableFlight = exists(select Flights.FlightId
                                  from Flights
-                                 where Flights.FlightId = _FlightId
+                                 where Flights.FlightId = FlightsStat.FlightId
                                    and Flights.FlightTime >= CurrentTime);
     HasReservations = exists(select Passengers.SeatNo
                               from Passengers
-                              where Passengers.FlightId = _FlightId
-                                and Passengers.UserId = _UserId
+                              where Passengers.FlightId = FlightsStat.FlightId
+                                and Passengers.UserId = FlightsStat.UserId
                                 and Passengers.Fake);
 
     select count(Seats.SeatNo)
     into SeatCount
     from Seats
              natural join Flights
-    where Flights.FlightId = _FlightId
+    where Flights.FlightId = FlightsStat.FlightId
       and FlightTime >= CurrentTime;
 
     select count(case when ValidFlightPassengers.Fake then ValidFlightPassengers.SeatNo end)
          , count(case when not ValidFlightPassengers.Fake then ValidFlightPassengers.SeatNo end)
     into ReservedSeatCount
         , BoughtSeatsCount
-    from ValidFlightPassengers(_FlightId, CurrentTime) as ValidFlightPassengers;
+    from ValidFlightPassengers(FlightsStat.FlightId, CurrentTime) as ValidFlightPassengers;
     FreeSeatsCount = FreeSeatCount(SeatCount, ReservedSeatCount, BoughtSeatsCount);
 
     return query

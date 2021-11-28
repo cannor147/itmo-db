@@ -1,18 +1,18 @@
 -- | Returns true if passenger bought or reserved the seat, otherwise false.
 create or replace function IsPassengerValid
-    ( in _Passenger Passengers
-    , in _Time      timestamp
+    ( in Passenger   Passengers
+    , in CurrentTime timestamp
     ) returns boolean as
 $$
 begin
-    return not _Passenger.Fake or _Passenger.ReservationTime + 3 * interval '1 day' >= _Time;
+    return not IsPassengerValid.Passenger.Fake or IsPassengerValid.Passenger.ReservationTime + 3 * interval '1 day' >= CurrentTime;
 end;
 $$ language plpgsql;
 
 -- | Returns list of valid passengers of flight.
 create or replace function ValidFlightPassengers
-    ( in _FlightId integer
-    , in _Time     timestamp
+    ( in FlightId integer
+    , in CurrentTime     timestamp
     ) returns setof Passengers as
 $$
 begin
@@ -22,27 +22,27 @@ begin
                       , Passengers.ReservationTime
                       , Passengers.Fake
                  from Passengers
-                 where Passengers.FlightId = _FlightId
-                   and IsPassengerValid(Passengers, _Time);
+                 where Passengers.FlightId = ValidFlightPassengers.FlightId
+                   and IsPassengerValid(Passengers, CurrentTime);
 end;
 $$ language plpgsql;
 
 -- | Returns true if there is a reservation for user and seat on flight, otherwise false.
 create or replace function HasFakePassenger
-    ( in _FlightId integer
-    , in _SeatNo   varchar(4)
-    , in _UserId   integer
-    , in _Time     timestamp
+    ( in FlightId    integer
+    , in SeatNo      varchar(4)
+    , in UserId      integer
+    , in CurrentTime timestamp
     ) returns boolean as
 $$
 begin
     return exists(select Passengers.SeatNo
                   from Passengers
-                  where Passengers.FlightId = _FlightId
-                    and Passengers.SeatNo = _SeatNo
-                    and Passengers.UserId = _UserId
+                  where Passengers.FlightId = HasFakePassenger.FlightId
+                    and Passengers.SeatNo = HasFakePassenger.SeatNo
+                    and Passengers.UserId = HasFakePassenger.UserId
                     and Passengers.Fake
-                    and IsPassengerValid(Passengers, _Time));
+                    and IsPassengerValid(Passengers, CurrentTime));
 end;
 $$ language plpgsql;
 

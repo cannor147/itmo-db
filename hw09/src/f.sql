@@ -1,7 +1,7 @@
 -- | Calculated statistics for user about all flights.
 create or replace function FlightsStatistics
-    ( in _UserId integer
-    , in _Pass   varchar(50)
+    ( in UserId integer
+    , in Pass   varchar(50)
     ) returns table
     ( FlightId      integer -- Identifier of flight.
     , CanReserve    boolean -- If the user can reserve at least one seat.
@@ -16,7 +16,7 @@ declare
     HasUser     boolean;
 begin
     CurrentTime = now();
-    HasUser = HasUser(_UserId, _Pass);
+    HasUser = HasUser(FlightsStatistics.UserId, FlightsStatistics.Pass);
     return query
         select Flights.FlightId                                                                                                         as FlightId
              , HasUser and FlightTime >= CurrentTime
@@ -33,9 +33,9 @@ begin
                                     from Seats
                                     group by Seats.PlaneId) as PlainStats
                  natural left join (select Passengers.FlightId
-                                         , count(case when Fake then SeatNo end)                      as ReservedSeats
-                                         , count(case when not Fake then SeatNo end)                  as BoughtSeats
-                                         , count(case when Fake and UserId = _UserId then SeatNo end) as UserReservedSeats
+                                         , count(case when Fake then SeatNo end)                                                  as ReservedSeats
+                                         , count(case when not Fake then SeatNo end)                                              as BoughtSeats
+                                         , count(case when Fake and Passengers.UserId = FlightsStatistics.UserId then SeatNo end) as UserReservedSeats
                                     from Passengers
                                     group by Passengers.FlightId) as PassengerStats;
 end;
