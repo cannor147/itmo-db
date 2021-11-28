@@ -7,14 +7,14 @@ create table Flights
 
 -- | Table of seats.
 create table Seats
-    ( PlanEId integer    not null
-    , SeaTNo  varchar(4) not null
+    ( PlaneId integer    not null
+    , SeatNo  varchar(4) not null
     );
 
 -- | Table of registered users in the system.
 create table Users
-    ( UserId     integer     not null
-    , Pass       varchar(50) not null
+    ( UserId   integer     not null
+    , Pass     varchar(50) not null
     , UserName varchar(255)
     );
 
