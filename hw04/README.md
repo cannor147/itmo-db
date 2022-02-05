@@ -1,4 +1,4 @@
-### Домашнее задание 4. Нормализация БД «Университет»
+## Домашнее задание 4. Нормализация БД «Университет»
 
 Дано отношение с атрибутами *StudentId*, *StudentName*, *GroupId*, *GroupName*, *CourseId*, *CourseName*, *LecturerId*, *LecturerName*, *Mark*.
 
